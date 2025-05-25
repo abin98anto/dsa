@@ -33,16 +33,15 @@ class LinkedList {
   reverse = () => {
     let cur = this.head;
     let pre = null;
-    let nxt = null;
+    this.tail = this.head;
 
     while(cur) {
-        nxt = cur.next;
+        let nxt = cur.next;
         cur.next = pre;
         pre = cur;
         cur = nxt;
     }
 
-    this.tail = this.head;
     this.head = pre;
   }
 

@@ -25,14 +25,14 @@ const binarySearchRecursion = (
   left = 0,
   right = arr.length - 1
 ) => {
-  if (arr.length < 1) return arr;
+  if (left > right) return arr;
   let mid = Math.floor((left + right) / 2);
 
   if (arr[mid] === target) return mid;
 
   return arr[mid] < target
-    ? binarySearch(arr, target, (left = 0), (right = mid - 1))
-    : binarySearch(arr, target, (left = mid + 1), right);
+    ? binarySearch(arr, target, 0, mid - 1)
+    : binarySearch(arr, target, mid + 1, right);
 };
 
-console.log(binarySearchRecursion(arr,4));
+console.log(binarySearchRecursion(arr, 4));
