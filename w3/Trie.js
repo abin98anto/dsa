@@ -72,6 +72,25 @@ class Trie {
     }
     return true;
   };
+
+  autoComplete = (prefix) => {
+    let node = this.root;
+    for (let char of prefix.toLowerCase()) {
+      if (!node.children.has(char)) return;
+      node = node.children.get(char);
+    }
+
+    let result = [];
+    const dfs = (currNode, path) => {
+      if (currNode.isWordEnd) result.push(prefix + path);
+      for (const [char, child] of currNode.children) {
+        dfs(child, path + char);
+      }
+    };
+
+    dfs(node, "");
+    return result;
+  };
 }
 
 const T = new Trie();
@@ -79,9 +98,10 @@ T.insert("Hey");
 T.insert("hey");
 T.insert("hello");
 T.insert("Hi");
-console.log(T.printAllWords());
+// console.log(T.printAllWords());
 // T.deleteWord("hey");
-console.log(T.printAllWords());
-console.log(T.isPrefix("he"));
+// console.log(T.printAllWords());
+console.log(T.autoComplete("HEL"));
+// console.log(T.isPrefix("he"));
 // console.log(T.search("hey"));
 // console.log(T.search("heyo!"));
