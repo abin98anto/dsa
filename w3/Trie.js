@@ -56,12 +56,21 @@ class Trie {
     if (!node.isWordEnd) return;
     node.isWordEnd = false; // logically deletes the word. The word won't appear in search() after this.
 
-    for (let i = stack.length-1; i >= 0; i--) {
+    for (let i = stack.length - 1; i >= 0; i--) {
       const [parent, char] = stack[i];
       const child = parent.children.get(char);
       if (child.children.size > 0 || child.isWordEnd) break;
       parent.children.delete(char);
     }
+  };
+
+  isPrefix = (prefix) => {
+    let node = this.root;
+    for (let char of prefix.toLowerCase()) {
+      if (!node.children.has(char)) return false;
+      node = node.children.get(char);
+    }
+    return true;
   };
 }
 
@@ -71,7 +80,8 @@ T.insert("hey");
 T.insert("hello");
 T.insert("Hi");
 console.log(T.printAllWords());
-T.deleteWord("hey");
+// T.deleteWord("hey");
 console.log(T.printAllWords());
-console.log(T.search("hey"));
+console.log(T.isPrefix("he"));
+// console.log(T.search("hey"));
 // console.log(T.search("heyo!"));
